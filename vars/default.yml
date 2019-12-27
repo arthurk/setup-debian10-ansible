@@ -1,4 +1,4 @@
 ---
 create_user: arthur
 copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa_REAL.pub') }}"
-sys_packages: [ 'curl', 'vim', 'git', 'ufw', 'apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common', 'mosh', 'tmux']
+sys_packages: [ 'curl', 'vim', 'git', 'ufw', 'apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common', 'mosh', 'tmux', 'fail2ban']
