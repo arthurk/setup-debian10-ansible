@@ -67,6 +67,11 @@
         rule: allow
         name: OpenSSH
 
+    - name: UFW - Allow MOSH connections
+      ufw:
+        rule: allow
+        name: mosh
+
     - name: UFW - Deny all other incoming traffic by default
       ufw:
         state: enabled
