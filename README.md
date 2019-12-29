@@ -10,7 +10,7 @@ It will:
 
 Usage:
 
-```
+```sh
 # create server (example hetzner)
 hcloud server create --name myserver --image debian-10 --type cx11 --ssh-key 123
 
