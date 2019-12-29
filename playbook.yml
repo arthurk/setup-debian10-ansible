@@ -94,6 +94,18 @@
         groups: docker
         append: true
 
+# unattended-upgrades setup
+    - name: Generate the unattended-upgrades templates to enable automatic security updates
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - { src: "20auto-upgrades.j2",       dest: "/etc/apt/apt.conf.d/20auto-upgrades" }
+        - { src: "50unattended-upgrades.j2", dest: "/etc/apt/apt.conf.d/50unattended-upgrades" }
+
 # docker-compose setup
     - name: Install docker-compose
       get_url:
