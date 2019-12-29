@@ -4,6 +4,12 @@
   vars_files:
     - vars/default.yml
 
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
+
   tasks:
     - name: Install Prerequisites
       apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
@@ -39,16 +45,14 @@
         key: "{{ copy_local_key }}"
 
 # SSH server settings
-    - name: Disable password authentication for root
-      lineinfile: dest=/etc/ssh/sshd_config regexp='^PermitRootLogin' line='PermitRootLogin no'
-
-    # LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was used to log in
-    - name: Enable sshd verbose loglevel
-      lineinfile: dest=/etc/ssh/sshd_config regexp='^#?LogLevel' line='LogLevel VERBOSE'
-
-    - name: Password based logins are disabled - only public key based logins are allowed.
-      lineinfile: dest=/etc/ssh/sshd_config regexp='^#?AuthenticationMethods' line='AuthenticationMethods publickey'
-    - lineinfile: dest=/etc/ssh/sshd_config regexp='^#?PasswordAuthentication' line='PasswordAuthentication no'
+    - name: Reconfigure OpenSSH with enhanced security settings
+      copy:
+        src: sshd_config
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart SSH
 
 # Install Packages
     - name: Update apt
@@ -121,7 +125,3 @@
         mode: "644"
         owner: "{{ create_user }}"
         group: "{{ create_user }}"
-
-# Restart sshd
-    - name: restart sshd
-      service: name=ssh state=restarted

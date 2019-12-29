@@ -23,6 +23,9 @@ hcloud server create --name myserver --image debian-10 --type cx11 --ssh-key 123
     [servers:vars]
     ansible_python_interpreter=/usr/bin/python3
 
+# make sure it can connect
+ansible all -m ping -u root
+
 # first time must be ron as root to create user
 ansible-playbook playbook.yml -l myserver -u root
 
