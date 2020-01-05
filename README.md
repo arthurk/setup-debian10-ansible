@@ -35,3 +35,9 @@ ansible-playbook playbook.yml -l myserver -u arthur
 # login to server
 mosh arthur@<server_ip>
 ```
+
+On GCP servers a firewall rule to allow mosh has to be added:
+
+```sh
+gcloud compute firewall-rules create mosh --allow udp:60000-61000
+```
