@@ -5,7 +5,7 @@ It will:
 - create sudo group (wheel)
 - create user (in wheel group) and copy local ssh key
 - ssh: disable password based logins, disable root login
-- install mosh, ufw, fail2ban, htop, tmux, docker, docker-compose
+- install mosh, ufw, fail2ban, htop, tmux
 - install unattended-upgrades and enable automatic security upgrades
 
 Usage:
@@ -17,11 +17,11 @@ hcloud server create --name myserver --image debian-10 --type cx11 --ssh-key 123
 # update ansible inventory
 # /etc/ansible/hosts
 
-    [servers]
-    myserver ansible_host=<server_ip>
+[servers]
+myserver ansible_host=<server_ip>
 
-    [servers:vars]
-    ansible_python_interpreter=/usr/bin/python3
+[servers:vars]
+ansible_python_interpreter=/usr/bin/python3
 
 # make sure it can connect
 ansible all -m ping -u root
