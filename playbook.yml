@@ -14,6 +14,16 @@
     - name: Install Prerequisites
       apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
 
+# Install and ugrade packages
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        cache_valid_time: 86400 # One day
+        upgrade: yes
+
+    - name: Install required system packages
+      apt: name={{ sys_packages }} state=latest
+
 # Sudo Group Setup
     - name: Make sure we have a 'wheel' group
       group:
@@ -53,13 +63,6 @@
         group: root
         mode: 0644
       notify: Restart SSH
-
-# Install Packages
-    - name: Update apt
-      apt: update_cache=yes
-
-    - name: Install required system packages
-      apt: name={{ sys_packages }} state=latest
 
 # UFW Setup
     - name: UFW - Allow SSH connections
